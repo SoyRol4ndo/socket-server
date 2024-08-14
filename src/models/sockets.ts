@@ -1,4 +1,5 @@
 import {Server as SocketIOServer, Socket} from "socket.io";
+import {cocina} from "./cocina_data_mock";
 
 export class Sockets {
 	private io: SocketIOServer;
@@ -337,7 +338,18 @@ export class Sockets {
 				],
 			};
 
-			socket.emit("emit-data", data);
+			socket.emit("emit-data", {...data, cocina});
+
+			socket.on("saveOrder", data => {
+				const orderTable = JSON.stringify(data);
+				console.log(orderTable);
+
+				socket.emit("orderSaved", orderTable);
+			});
+
+			socket.on("orden-lista", data => {
+				console.log(data);
+			});
 		});
 	}
 }

@@ -4,7 +4,8 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"dev": "nodemon index.ts",
-		"build": "tsc"
+		"build": "tsc",
+		"start": "nmp install && npm build"
 	},
 	"dependencies": {
 		"dotenv": "^10.0.0",
