@@ -1,5 +1,6 @@
 import {Server as SocketIOServer, Socket} from "socket.io";
 import {cocina} from "./cocina_data_mock";
+import {new_data_menu} from "./new_data_menu";
 
 export class Sockets {
 	private io: SocketIOServer;
@@ -338,7 +339,7 @@ export class Sockets {
 				],
 			};
 
-			socket.emit("emit-data", {...data, cocina});
+			socket.emit("emit-data", {...data, cocina, new_data_menu});
 
 			socket.on("saveOrder", data => {
 				const orderTable = JSON.stringify(data);

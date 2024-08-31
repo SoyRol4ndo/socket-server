@@ -164,9 +164,4 @@ export const new_data_menu: NewDataMenu[] = [
 			},
 		],
 	},
-	{
-		id: "6c1aab73-bdd3-449a-a5cc-5a85c0196b93",
-		nombre: "Postres",
-		items: [],
-	},
 ];
