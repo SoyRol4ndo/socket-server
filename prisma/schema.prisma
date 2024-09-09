@@ -1,0 +1,58 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql" // Cambia a tu base de datos si es diferente
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Business {
+  id              Int    @id @default(autoincrement())
+  name            String
+  mainTitle       String
+  mainLabel       String
+  mainPhoto       String
+  historyTitle    String
+  historyLabel    String
+  historyPhoto    String
+  footerName      String
+  footerEmail     String
+  footerLogo      String
+  footerInstagram String
+  footerFacebook  String
+  footerContact   String
+
+  characteristics Characteristic[] // Relación 1 a muchos
+  menuItems       MenuItem[] // Relación 1 a muchos
+  tables          Table[] // Relación 1 a muchos
+}
+
+model Characteristic {
+  id         Int      @id @default(autoincrement())
+  logo       String
+  item       String
+  text       String
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId Int
+}
+
+model MenuItem {
+  id          Int      @id @default(autoincrement())
+  name        String
+  photo       String
+  description String
+  price       Float
+  business    Business @relation(fields: [businessId], references: [id])
+  businessId  Int
+}
+
+model Table {
+  id         Int      @id @default(autoincrement())
+  name       String
+  busy       Boolean
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId Int
+}
