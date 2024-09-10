@@ -1,7 +1,7 @@
 // schema.prisma
 
 datasource db {
-  provider = "postgresql" // Cambia a tu base de datos si es diferente
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,23 +11,32 @@ generator client {
 
 model Business {
   id              Int    @id @default(autoincrement())
-  name            String
-  mainTitle       String
-  mainLabel       String
-  mainPhoto       String
-  historyTitle    String
-  historyLabel    String
-  historyPhoto    String
-  footerName      String
-  footerEmail     String
-  footerLogo      String
-  footerInstagram String
-  footerFacebook  String
-  footerContact   String
+  nombreNegocio   String
+  main            Main   @relation(fields: [mainId], references: [id])
+  mainId          Int    @unique
+  history         History @relation(fields: [historyId], references: [id])
+  historyId       Int    @unique
+  characteristics Characteristic[]
+  footer          Footer @relation(fields: [footerId], references: [id])
+  footerId        Int    @unique
+  mesas           Mesa[]
+  menuCategories  MenuCategory[]
+}
 
-  characteristics Characteristic[] // Relación 1 a muchos
-  menuItems       MenuItem[] // Relación 1 a muchos
-  tables          Table[] // Relación 1 a muchos
+model Main {
+  id       Int      @id @default(autoincrement())
+  title    String
+  label    String
+  foto     String
+  business Business?
+}
+
+model History {
+  id       Int      @id @default(autoincrement())
+  title    String
+  label    String
+  foto     String
+  business Business?
 }
 
 model Characteristic {
@@ -39,20 +48,40 @@ model Characteristic {
   businessId Int
 }
 
-model MenuItem {
-  id          Int      @id @default(autoincrement())
-  name        String
-  photo       String
-  description String
-  price       Float
-  business    Business @relation(fields: [businessId], references: [id])
-  businessId  Int
-}
-
-model Table {
+model Footer {
   id         Int      @id @default(autoincrement())
   name       String
-  busy       Boolean
+  correo     String
+  logo       String
+  instagram  String
+  facebook   String
+  contacto   String
+  business   Business?
+}
+
+model Mesa {
+  id         Int      @id @default(autoincrement())
+  mesa       String
+  bussy      Boolean
   business   Business @relation(fields: [businessId], references: [id])
   businessId Int
+}
+
+model MenuCategory {
+  id         String   @id @default(uuid())
+  nombre     String
+  items      MenuItem[]
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId Int
+}
+
+model MenuItem {
+  id             String   @id @default(uuid())
+  nombre         String
+  descripcion    String
+  precio         Float
+  foto           String
+  habilitado     Boolean  @default(true)
+  menuCategory   MenuCategory @relation(fields: [menuCategoryId], references: [id])
+  menuCategoryId String
 }
