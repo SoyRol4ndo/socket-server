@@ -5,9 +5,11 @@
 	"scripts": {
 		"dev": "nodemon index.ts",
 		"build": "tsc",
-		"start": "npm install && npm build",
-		"seed" : "ts-node --transpile-only prisma/seed.ts"
+		"start": "npm install && npm build"
 	},
+	"prisma": {
+  "seed": "ts-node prisma/seed.ts"
+},
 	"dependencies": {
 		"@prisma/client": "^5.19.1",
 		"cors": "^2.8.5",
