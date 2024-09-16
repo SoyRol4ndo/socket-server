@@ -7,6 +7,8 @@
 3. Renombrar el archivo `temp.env` a `.env`
 
 4. Levantar el servidor con `npm run dev`
+5. Resetar la base datos`npx prisma migrate reset` automaticamnte se corre el seed
+6. Correr el seed `npx prisma db seed`
 
 ## Uso
 
